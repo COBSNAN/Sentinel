@@ -155,7 +155,9 @@ public class ClusterAssignServiceImpl implements ClusterAssignService {
             .map(e -> {
                 String ip = e.getIp();
                 int commandPort = parsePort(e);
+                //cobs 修改集群状态
                 CompletableFuture<Void> f = modifyMode(ip, commandPort, ClusterStateManager.CLUSTER_SERVER)
+                        //集群server服务 获取配置变更
                     .thenCompose(v -> applyServerConfigChange(app, ip, commandPort, e));
                 return Tuple2.of(e.getMachineId(), f);
             })

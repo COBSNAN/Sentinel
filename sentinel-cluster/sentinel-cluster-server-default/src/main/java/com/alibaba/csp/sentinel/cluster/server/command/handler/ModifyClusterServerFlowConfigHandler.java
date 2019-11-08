@@ -32,6 +32,7 @@ import com.alibaba.fastjson.JSON;
  * @author Eric Zhao
  * @since 1.4.0
  */
+//修改配置 连接总是等，是在集群server那设置的
 @CommandMapping(name = "cluster/server/modifyFlowConfig", desc = "modify cluster server flow config")
 public class ModifyClusterServerFlowConfigHandler implements CommandHandler<String> {
 

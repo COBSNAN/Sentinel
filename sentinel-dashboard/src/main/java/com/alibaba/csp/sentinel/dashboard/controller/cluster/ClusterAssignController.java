@@ -67,6 +67,7 @@ public class ClusterAssignController {
         }
     }
 
+    //cobs 集群服务修改
     @PostMapping("/single_server/{app}")
     public Result<ClusterAppAssignResultVO> apiAssignSingleClusterServersOfApp(@PathVariable String app,
                                                                                @RequestBody ClusterAppSingleServerAssignRequest assignRequest) {
