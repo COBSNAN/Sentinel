@@ -61,9 +61,11 @@ public abstract class LeapArray<T> {
         AssertUtil.isTrue(sampleCount > 0, "bucket count is invalid: " + sampleCount);
         AssertUtil.isTrue(intervalInMs > 0, "total time interval of the sliding window should be positive");
         AssertUtil.isTrue(intervalInMs % sampleCount == 0, "time span needs to be evenly divided");
-
+        //cobs bucket 时间长度，记录一段时间内的统计个数
         this.windowLengthInMs = intervalInMs / sampleCount;
+        //等于1000 1s = 1000ms
         this.intervalInMs = intervalInMs;
+        //分成2个区块
         this.sampleCount = sampleCount;
 
         this.array = new AtomicReferenceArray<>(sampleCount);
@@ -101,6 +103,7 @@ public abstract class LeapArray<T> {
         return (int)(timeId % array.length());
     }
 
+    //cobs 一个区段的开始毫秒
     protected long calculateWindowStart(/*@Valid*/ long timeMillis) {
         return timeMillis - timeMillis % windowLengthInMs;
     }

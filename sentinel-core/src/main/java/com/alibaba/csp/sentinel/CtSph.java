@@ -124,7 +124,7 @@ public class CtSph implements Sph {
         }
 
         if (context == null) {
-            // Using default context.
+            // Using default context. 如果是入口资源，且之前没调用过，初始换支持，并初始化EntranceNode
             context = InternalContextUtil.internalEnter(Constants.CONTEXT_DEFAULT_NAME);
         }
 

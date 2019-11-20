@@ -37,6 +37,7 @@ public class DefaultSlotChainBuilder implements SlotChainBuilder {
 
     @Override
     public ProcessorSlotChain build() {
+        //todo cobs 这是一个默认的执行顺序
         ProcessorSlotChain chain = new DefaultProcessorSlotChain();
         chain.addLast(new NodeSelectorSlot());
         chain.addLast(new ClusterBuilderSlot());
