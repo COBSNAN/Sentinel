@@ -106,7 +106,7 @@ public class ContextUtil {
      * @param name   the context name
      * @param origin the origin of this invocation, usually the origin could be the Service
      *               Consumer's app name. The origin is useful when we want to control different
-     *               invoker/consumer separately.
+     *               invoker/consumer separately.  todo cobs 和规则中的applitmit 匹配
      * @return The invocation context of the current thread
      */
     public static Context enter(String name, String origin) {

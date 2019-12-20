@@ -97,7 +97,7 @@ public class ClusterBuilderSlot extends AbstractLinkedProcessorSlot<DefaultNode>
             Node originNode = node.getClusterNode().getOrCreateOriginNode(context.getOrigin());
             context.getCurEntry().setOriginNode(originNode);
         }
-
+        //触发下一个slot
         fireEntry(context, resourceWrapper, node, count, prioritized, args);
     }
 

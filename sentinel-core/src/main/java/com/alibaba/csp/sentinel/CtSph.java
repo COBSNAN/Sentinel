@@ -33,6 +33,10 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.Rule;
 
 /**
+ * resource 资源 ，由
+ */
+
+/**
  * {@inheritDoc}
  *
  * @author jialiang.linjl
@@ -132,7 +136,7 @@ public class CtSph implements Sph {
         if (!Constants.ON) {
             return new CtEntry(resourceWrapper, null, context);
         }
-
+        //获取默认slot 执行顺序
         ProcessorSlot<Object> chain = lookProcessChain(resourceWrapper);
 
         /*
@@ -192,6 +196,7 @@ public class CtSph implements Sph {
      * @return {@link ProcessorSlotChain} of the resource
      */
     ProcessorSlot<Object> lookProcessChain(ResourceWrapper resourceWrapper) {
+        //记录每个资源的调用链路，而调用链路中 NodeSelectorSlot 又保存了 不同contextname 下的资源Node信息。这里是唯一内存保存点。
         ProcessorSlotChain chain = chainMap.get(resourceWrapper);
         if (chain == null) {
             synchronized (LOCK) {

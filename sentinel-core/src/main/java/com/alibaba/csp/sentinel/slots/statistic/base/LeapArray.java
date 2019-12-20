@@ -96,7 +96,7 @@ public abstract class LeapArray<T> {
      * @return new clean bucket at given start time
      */
     protected abstract WindowWrap<T> resetWindowTo(WindowWrap<T> windowWrap, long startTime);
-
+    //占用数组位
     private int calculateTimeIdx(/*@Valid*/ long timeMillis) {
         long timeId = timeMillis / windowLengthInMs;
         // Calculate current index so we can map the timestamp to the leap array.

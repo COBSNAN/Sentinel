@@ -173,6 +173,7 @@ public class FlowSlot extends AbstractLinkedProcessorSlot<DefaultNode> {
         fireExit(context, resourceWrapper, count, args);
     }
 
+    //这个是规则获取的地方，通过FlowRuleManager 进行规则更改
     private final Function<String, Collection<FlowRule>> ruleProvider = new Function<String, Collection<FlowRule>>() {
         @Override
         public Collection<FlowRule> apply(String resource) {

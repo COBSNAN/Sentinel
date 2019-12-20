@@ -37,11 +37,14 @@ public class DefaultSlotChainBuilder implements SlotChainBuilder {
 
     @Override
     public ProcessorSlotChain build() {
-        //todo cobs 这是一个默认的执行顺序
+        //todo cobs 这是一个默认的执行顺序 DefaultProcessorSlotChain 是一个链表，指向下一个slot ，
         ProcessorSlotChain chain = new DefaultProcessorSlotChain();
+        //构造资源路径 ， 同一个资源由于资源路径不同，可以有不同的限流规则 .contextutil.entry
         chain.addLast(new NodeSelectorSlot());
+        //添加cluster node  同一个资源共用一个cluster node，作为记录
         chain.addLast(new ClusterBuilderSlot());
         chain.addLast(new LogSlot());
+        //重要 统计资源请求记录 qps thread 等
         chain.addLast(new StatisticSlot());
         chain.addLast(new AuthoritySlot());
         chain.addLast(new SystemSlot());

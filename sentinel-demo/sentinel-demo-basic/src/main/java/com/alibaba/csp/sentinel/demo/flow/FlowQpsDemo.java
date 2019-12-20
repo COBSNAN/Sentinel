@@ -21,6 +21,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.util.TimeUtil;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.SphU;
@@ -49,9 +50,10 @@ public class FlowQpsDemo {
     public static void main(String[] args) throws Exception {
         initFlowQpsRule();
 
-        tick();
+        //tick();
         // first make the system run on a very low condition
-        simulateTraffic();
+        //simulateTraffic();
+        new RunTask().run();
 
         System.out.println("===== begin to do flow control");
         System.out.println("only 20 requests per second can pass");
@@ -65,7 +67,7 @@ public class FlowQpsDemo {
         // set limit qps to 20
         rule1.setCount(20);
         rule1.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule1.setLimitApp("default");
+        rule1.setLimitApp("xxx");
         rules.add(rule1);
         FlowRuleManager.loadRules(rules);
     }
@@ -132,13 +134,16 @@ public class FlowQpsDemo {
     static class RunTask implements Runnable {
         @Override
         public void run() {
-            while (!stop) {
+            int i = 2;
+            while (i-- >= 0) {
                 Entry entry = null;
 
                 try {
+                    ContextUtil.enter("xxx","cc");
                     entry = SphU.entry(KEY);
                     // token acquired, means pass
                     pass.addAndGet(1);
+                    otherResource();
                 } catch (BlockException e1) {
                     block.incrementAndGet();
                 } catch (Exception e2) {
@@ -159,4 +164,25 @@ public class FlowQpsDemo {
             }
         }
     }
+
+    static private void otherResource(){
+        Entry entry = null;
+
+        try {
+            entry = SphU.entry(KEY + 2);
+            // token acquired, means pass
+
+        } catch (BlockException e1) {
+
+        } catch (Exception e2) {
+            // biz exception
+        } finally {
+
+            if (entry != null) {
+                entry.exit();
+            }
+        }
+    }
+
+
 }
